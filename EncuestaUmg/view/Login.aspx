@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Default.aspx.vb" Inherits="view_Index" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Login.aspx.vb" Inherits="view_Login" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Administracion General</title>
-    <link href="../css/boostrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/boostrap.css" />
     <link href="../css/font-awesome.css" rel="stylesheet" />
     <link href="../css/offcanvas.css" rel="stylesheet" />
     <style>
@@ -23,7 +23,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        Default
+        Login
     </div>
     </form>
     <script src="../js/jquery.js"></script>

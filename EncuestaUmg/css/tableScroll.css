@@ -1,0 +1,18 @@
+.div-scroll {
+	margin-right: 15px;
+    max-height: 275px;
+    overflow-y: scroll;
+ }
+
+ .div-scroll-sm {
+    max-height: 150px;
+ }
+
+ .div-scroll-md {
+    max-height: 275px;
+ }
+
+ .div-scroll-lg {
+    max-height: 500px;
+ }
+  
