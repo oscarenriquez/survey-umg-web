@@ -1,0 +1,94 @@
+﻿<%@ Master Language="VB" CodeFile="Mantenimientos.master.vb" Inherits="Mantenimientos" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administracion General</title>
+    <link href="/Styles/boostrap.css" rel="stylesheet" />
+    <link href="/Styles/font-awesome.css" rel="stylesheet" />
+    <link href="/Styles/offcanvas.css" rel="stylesheet" />
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>  
+    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-pro1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="padding: 0; margin-right: 5px;">
+                    <img src="../Images/172.png" width="50" />
+                </a>
+                <a class="navbar-brand" href="#">ENCUESTA</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-pro1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="asignacionBloques.html">Estudiantes</a>
+                            </li>
+                            <li><a href="personalDisponible.html">Administradores</a>
+                            </li>                           
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Carreras <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Administrar Carreras</a>
+                            </li>
+                            <li><a href="#">Cursos</a>
+                            </li>                           
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Catedr&aacute;ticos <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Administrar Catedr&aacute;ticos</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dashboard <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Graficas</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones <b class="caret"></b></a>
+                        <ul class="dropdown-menu">                            
+                            <li class="divider"></li>
+                            <li><asp:HyperLink ID="CerrarSession" runat="server"><i class="icon-off"></i>  Cerrar Sesi&oacute;n</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <asp:ContentPlaceHolder ID="cpMain" runat="server" />
+        </div>
+    </div>    
+    <script src="/Scripts/jquery.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/carrera.js"></script>
+</body>
+</html>

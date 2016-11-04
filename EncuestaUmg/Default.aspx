@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="content">
-        <img id="Logo" alt="Logo" src="../Images/LOGO_UMG_juvenil.jpg" />
+        <img id="Logo" alt="Logo" src="../Images/umg.edu.png" />
         <form id="formStudent" runat="server" class="form-horizontal" role="form" action="/Views/Valida.aspx">
             <h3 class="title">ENCUESTA</h3>            
             <div class="form-group">
@@ -54,7 +54,6 @@
         </form>
     </div>
     <script src="../Scripts/jquery.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/utils.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>    
 </body>
 </html>

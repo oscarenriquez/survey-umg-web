@@ -20,15 +20,14 @@
 </head>
 <body>
     <div id="content">
+        <img id="Logo" alt="Logo" src="../Images/umg.edu.png" />
         <form id="formLogin" runat="server">
-
             <asp:Login ID="Login1" runat="server" Height="100%" TextLayout="TextOnTop" Width="100%">
                 <CheckBoxStyle Wrap="True" />
                 <LoginButtonStyle CssClass="btn btn-primary btn-lg" />
                 <TextBoxStyle CssClass="form-control input-lg" />
                 <TitleTextStyle CssClass="title" />
             </asp:Login>
-
         </form>
     </div>
     <script src="../Scripts/jquery.js"></script>

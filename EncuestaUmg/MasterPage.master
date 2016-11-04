@@ -1,0 +1,33 @@
+﻿<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administracion General</title>
+    <link href="/Styles/boostrap.css" rel="stylesheet" />
+    <link href="/Styles/font-awesome.css" rel="stylesheet" />
+    <link href="/Styles/offcanvas.css" rel="stylesheet" />
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <asp:ContentPlaceHolder ID="cpHeader" runat="server" />
+
+    <div class="container">
+        <div class="row">
+            <asp:ContentPlaceHolder ID="cpMain" runat="server" />
+        </div>
+    </div>    
+    <script src="/Scripts/jquery.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

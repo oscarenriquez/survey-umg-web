@@ -1148,10 +1148,7 @@ pre code {
     margin-left: 91.66666666666666%;
   }
 }
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1340px;
-  }
+@media (min-width: 1200px) {  
   .col-lg-1,
   .col-lg-2,
   .col-lg-3,
