@@ -3,12 +3,16 @@ Partial Class Views_Carreras
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Not (Session("Activo") IsNot Nothing AndAlso Session("Activo")) Then
+            Response.Redirect("/", True)
+        End If
         If gvCarreras.SelectedIndex > -1 Then
             btnNuevoCurso.Enabled = True
         Else
             btnNuevoCurso.Enabled = False
         End If
     End Sub
+
     Protected Sub btnGuardarCarrera_Click(sender As Object, e As EventArgs) Handles btnGuardarCarrera.Click
         CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = NombreCarrera.Text
         CarrerasSDS.Insert()

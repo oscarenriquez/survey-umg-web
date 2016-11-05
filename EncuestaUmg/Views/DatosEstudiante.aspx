@@ -26,6 +26,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMain" runat="server">
 
     <form id="form1" runat="server" class="form-horizontal">
+        <asp:ScriptManager ID="sm" runat="server"></asp:ScriptManager>
+        <asp:HiddenField ID="ID_CARRERA_HIDDEN" runat="server" />
         <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">
                 <h3 class="title">Datos del Estudiante</h3>
@@ -38,7 +40,8 @@
                 <div class="form-group">
                     <label for="listCarreras" class="control-label col-sm-3">Carrera: </label>
                     <div class="col-sm-9">
-                        <asp:DropDownList ID="listCarreras" runat="server" CssClass="form-control" required="required"></asp:DropDownList>
+                        <asp:DropDownList ID="listCarreras" runat="server" CssClass="form-control" required="required" DataSourceID="DropDownCarrera" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
+                        <asp:SqlDataSource ID="DropDownCarrera" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT * FROM [CARRERA]"></asp:SqlDataSource>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +53,18 @@
                 <div class="form-group">
                     <label for="Ciclo" class="control-label col-sm-3">Ciclo: </label>
                     <div class="col-sm-9">
-                        <asp:DropDownList ID="Ciclo" runat="server" CssClass="form-control" required="required"></asp:DropDownList>
+                        <asp:DropDownList ID="Ciclo" runat="server" CssClass="form-control" required="required">
+                            <asp:ListItem Value="1">CICLO 1</asp:ListItem>
+                            <asp:ListItem Value="2">CICLO 2</asp:ListItem>
+                            <asp:ListItem Value="3">CICLO 3</asp:ListItem>
+                            <asp:ListItem Value="4">CICLO 4</asp:ListItem>
+                            <asp:ListItem Value="5">CICLO 5</asp:ListItem>
+                            <asp:ListItem Value="6">CICLO 6</asp:ListItem>
+                            <asp:ListItem Value="7">CICLO 7</asp:ListItem>
+                            <asp:ListItem Value="8">CICLO 8</asp:ListItem>
+                            <asp:ListItem Value="9">CICLO 9</asp:ListItem>
+                            <asp:ListItem Value="10">CICLO 10</asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                 </div>
                 <div class="form-group text-center">
@@ -65,21 +79,34 @@
                 <div class="form-group">
                     <label for="ListaCursos" class="control-label col-sm-3">Curso: </label>
                     <div class="col-sm-9">
-                        <asp:DropDownList ID="ListaCursos" runat="server" CssClass="form-control" required="required"></asp:DropDownList>
+                        <asp:DropDownList ID="ListaCursos" runat="server" CssClass="form-control" required="required" DataSourceID="DrowDownCurso" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
+                    <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-danger"/>
+
+                        <asp:SqlDataSource ID="DrowDownCurso" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT ID, NOMBRE FROM [CURSO] WHERE ([ID_CARRERA] = CAST(@ID_CARRERA AS BIGINT))">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="ID_CARRERA_HIDDEN" DefaultValue="0" Name="ID_CARRERA" PropertyName="Value" Type="Int64" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="ListaCatedraticos" class="control-label col-sm-3">Catedr&aacute;tico: </label>
-                    <div class="col-sm-9">
-                        <asp:DropDownList ID="ListaCatedraticos" runat="server" CssClass="form-control" required="required"></asp:DropDownList>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="ListaSecciones" class="control-label col-sm-3">Secci&oacute;n: </label>
-                    <div class="col-sm-9">
-                        <asp:DropDownList ID="ListaSecciones" runat="server" CssClass="form-control" required="required"></asp:DropDownList>
-                    </div>
-                </div>
+                <div class="form-group">                    
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
+                            <label for="ListaCatedraticos" class="control-label col-sm-3">Catedr&aacute;tico: </label>
+                            <div class="col-sm-9">
+                                <asp:DropDownList ID="ListaCatedraticos" runat="server" CssClass="form-control" DataSourceID="DropDrownCatedratico" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
+                                <asp:SqlDataSource ID="DropDrownCatedratico" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT A.ID, CONCAT(B.NOMBRE, '-',  A.SECCION) AS NOMBRE FROM [CATEDRATICO_CURSO] AS A INNER JOIN [CATEDRATICO] AS B ON (A.ID_CATEDRATICO = B.ID) WHERE A.ID_CURSO = @ID_CURSO">
+                                    <SelectParameters>
+                                        <asp:ControlParameter ControlID="ListaCursos" DefaultValue="4" Name="ID_CURSO" PropertyName="SelectedValue" />
+                                    </SelectParameters>
+                                </asp:SqlDataSource>
+                            </div>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </div>               
                 <div class="form-group text-center">
                     <asp:HyperLink ID="btnCancelar2" runat="server" CssClass="btn btn-danger" NavigateUrl="../Default.aspx">Cancelar</asp:HyperLink>
                     <asp:Button ID="btnContinuar2" runat="server" Text="Continuar" CssClass="btn btn-primary"
@@ -118,7 +145,7 @@
                             <td class="td">
                                 <input type="radio" name="pregunta1" id="2" value="3" />
                             </td>
-                            <td class="td">
+                            <td class="td">                                
                                 <input type="radio" name="pregunta1" id="3" value="2" />
                             </td>
                             <td class="td">
@@ -156,33 +183,48 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="td1">Utiliza las herramientas tecnologicas provistas en el aula</td>
+                            <td class="td">
+                                <input type="radio" name="pregunta4" value="4" />
+                            </td>
+                            <td class="td">
+                                <input type="radio" name="pregunta4" value="3" />
+                            </td>
+                            <td class="td">
+                                <input type="radio" name="pregunta4" value="2" />
+                            </td>
+                            <td class="td">
+                                <input type="radio" name="pregunta4" value="1" />
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="td1">Utilización plataforma virtual para gestionar su curso</td>
                             <td class="td">
-                                <input type="radio" name="pregunta4" id="13" value="4" />
+                                <input type="radio" name="pregunta5" id="13" value="4" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta4" id="14" value="3" />
+                                <input type="radio" name="pregunta5" id="14" value="3" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta4" id="15" value="2" />
+                                <input type="radio" name="pregunta5" id="15" value="2" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta4" id="16" value="1" />
+                                <input type="radio" name="pregunta5" id="16" value="1" />
                             </td>
                         </tr>
                         <tr>
                             <td class="td1">Evaluación de actividades académicas en orden y con equidad</td>
                             <td class="td">
-                                <input type="radio" name="pregunta5" id="17" value="4" />
+                                <input type="radio" name="pregunta6" id="17" value="4" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta5" id="18" value="3" />
+                                <input type="radio" name="pregunta6" id="18" value="3" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta5" id="19" value="2" />
+                                <input type="radio" name="pregunta6" id="19" value="2" />
                             </td>
                             <td class="td">
-                                <input type="radio" name="pregunta5" id="uno" value="1" />
+                                <input type="radio" name="pregunta6" id="uno" value="1" />
                             </td>
                         </tr>
                     </tbody>
@@ -199,6 +241,6 @@
             </asp:View>
         </asp:MultiView>
         <!---->
-    </form>    
+    </form>
 </asp:Content>
 

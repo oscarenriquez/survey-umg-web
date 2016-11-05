@@ -22,6 +22,7 @@
     <div id="content">
         <img id="Logo" alt="Logo" src="../Images/umg.edu.png" />
         <form id="formLogin" runat="server">
+            <asp:HiddenField ID="Login" runat="server" Value="Login" />
             <asp:Login ID="Login1" runat="server" Height="100%" TextLayout="TextOnTop" Width="100%">
                 <CheckBoxStyle Wrap="True" />
                 <LoginButtonStyle CssClass="btn btn-primary btn-lg" />

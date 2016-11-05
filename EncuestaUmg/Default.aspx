@@ -29,6 +29,7 @@
                 </div>
             </div>
             <div class="form-group">
+                <asp:HiddenField ID="Encuesta" runat="server" Value="Encuesta" />
                 <div class="text-center subtitle"><span>Carnet</span> </div>
                 <div class="col-xs-4">
                     <div class="form-group">

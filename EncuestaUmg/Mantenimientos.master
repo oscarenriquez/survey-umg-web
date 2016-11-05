@@ -33,31 +33,27 @@
                 <a class="navbar-brand" style="padding: 0; margin-right: 5px;">
                     <img src="../Images/172.png" width="50" />
                 </a>
-                <a class="navbar-brand" href="#">ENCUESTA</a>
+                <a class="navbar-brand" href="../Views/Home.aspx">ENCUESTA</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-pro1-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="asignacionBloques.html">Estudiantes</a>
-                            </li>
-                            <li><a href="personalDisponible.html">Administradores</a>
-                            </li>                           
+                            <li><a href="../Views/Administradores.aspx">Administrar Usuarios</a>
+                            </li>                                                    
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Carreras <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Administrar Carreras</a>
-                            </li>
-                            <li><a href="#">Cursos</a>
-                            </li>                           
+                            <li><a href="../Views/Carreras.aspx">Administrar Carreras</a>
+                            </li>                                                    
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Catedr&aacute;ticos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Administrar Catedr&aacute;ticos</a>
+                            <li><a href="../Views/Catedraticos.aspx">Administrar Catedr&aacute;ticos</a>
                             </li>                            
                         </ul>
                     </li>
