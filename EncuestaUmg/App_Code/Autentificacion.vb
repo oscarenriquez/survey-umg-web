@@ -87,7 +87,7 @@ Public Class Autentificacion
         Dim param8 As SqlParameter = New SqlParameter("@PREGUNTA6", encuesta.PREGUNTA6)
         Dim param9 As SqlParameter = New SqlParameter("@TOTAL", encuesta.TOTAL)
         Dim param10 As SqlParameter = New SqlParameter("@OBSERVACIONES", encuesta.OBSERVACIONES)
-        Dim param11 As SqlParameter = New SqlParameter("@FECHA", encuesta.FECHA)
+        'Dim param11 As SqlParameter = New SqlParameter("@FECHA", encuesta.FECHA)
 
         parameters.Add(param1)
         parameters.Add(param2)
@@ -99,7 +99,7 @@ Public Class Autentificacion
         parameters.Add(param8)
         parameters.Add(param9)
         parameters.Add(param10)
-        parameters.Add(param11)
+        'parameters.Add(param11)
 
         Dim result As Integer = 0
         Try

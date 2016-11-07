@@ -11,20 +11,21 @@ Partial Class Views_Carreras
         Else
             btnNuevoCurso.Enabled = False
         End If
-    End Sub
 
-    Protected Sub btnGuardarCarrera_Click(sender As Object, e As EventArgs) Handles btnGuardarCarrera.Click
-        CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = NombreCarrera.Text
-        CarrerasSDS.Insert()
-        NombreCarrera.Text = String.Empty
-        CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
-    End Sub
-    Protected Sub btnGuardarCurso_Click(sender As Object, e As EventArgs) Handles btnGuardarCurso.Click
-        CursosSDS.InsertParameters("NOMBRE").DefaultValue = NombreCurso.Text
-        CursosSDS.InsertParameters("ID_CARRERA").DefaultValue = gvCarreras.SelectedValue
-        CursosSDS.Insert()
-        NombreCarrera.Text = String.Empty
-        CursosSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
+        If Request("GuardarCarrera") IsNot Nothing AndAlso Request("NombreCarrera") IsNot Nothing Then
+            Dim NombreCarrera As String = Request("NombreCarrera")
+            CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = NombreCarrera
+            CarrerasSDS.Insert()
+            CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
+        End If
+
+        If Request("GuardarCurso") IsNot Nothing AndAlso Request("NombreCurso") IsNot Nothing Then
+            Dim NombreCurso As String = Request("NombreCurso")
+            CursosSDS.InsertParameters("NOMBRE").DefaultValue = NombreCurso
+            CursosSDS.InsertParameters("ID_CARRERA").DefaultValue = gvCarreras.SelectedValue
+            CursosSDS.Insert()
+            CursosSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
+        End If
     End Sub
 
     Private Sub gvCarreras_SelectedIndexChanging(sender As Object, e As GridViewSelectEventArgs) Handles gvCarreras.SelectedIndexChanging

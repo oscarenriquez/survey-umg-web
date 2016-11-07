@@ -105,76 +105,65 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" role="dialog" id="nuevoCatedratico">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
-                        <h4 class="modal-title">Agregar Catedraticos</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form">
-                            <div class="form-group">
-                                <label>Nombre: </label>
-                                <asp:TextBox ID="Nombre" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label>Codigo: </label>
-                                <asp:TextBox ID="Codigo" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group text-center">
-                                <asp:Button ID="btnGuardarCatedratico" runat="server" Text="Guardar" CssClass="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" role="dialog" id="nuevaAsignacion">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
-                        <h4 class="modal-title">Nueva Asignacion</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form">
-                            <div class="form-group">
-                                <label>Carrera: </label>
-                                <asp:DropDownList ID="Carrera" runat="server" DataSourceID="DropDownCarrera" DataTextField="NOMBRE" CssClass="form-control" DataValueField="ID"></asp:DropDownList>
-                                <asp:SqlDataSource ID="DropDownCarrera" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT ID, NOMBRE FROM [CARRERA]"></asp:SqlDataSource>
-                            </div>
-                            <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-danger" />
-                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-
-                                <ContentTemplate>
-                                    <div class="form-group">
-                                        <label>Curso: </label>
-                                        <asp:DropDownList ID="Curso" runat="server" DataSourceID="DropDownCurso" DataTextField="NOMBRE" CssClass="form-control" DataValueField="ID"></asp:DropDownList>
-                                        <asp:SqlDataSource ID="DropDownCurso" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT [NOMBRE], [ID] FROM [CURSO] WHERE ([ID_CARRERA] = @ID_CARRERA)">
-                                            <SelectParameters>
-                                                <asp:ControlParameter ControlID="Carrera" DefaultValue="0" Name="ID_CARRERA" PropertyName="SelectedValue" Type="Int64" />
-                                            </SelectParameters>
-                                        </asp:SqlDataSource>
-                                    </div>
-                                </ContentTemplate>
-                                <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
-                                </Triggers>
-                            </asp:UpdatePanel>
-                            <div class="form-group">
-                                <label>Seccion: </label>
-                                <asp:TextBox ID="Seccion" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="form-group text-center">
-                                <asp:Button ID="btnGuardarAsignacion" runat="server" Text="Guardar" CssClass="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </form>
+    <div class="modal fade" role="dialog" id="nuevoCatedratico">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Agregar Catedraticos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Nombre: </label>                            
+                            <input type="text" id="Nombre" name="Nombre" class="form-control" required="required" placeholder="Nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label>Codigo: </label>                            
+                            <input type="number" id="Codigo" name="Codigo" class="form-control" required="required" />
+                        </div>
+                        <div class="form-group text-center">                            
+                            <input type="submit" id="GuardarCatedratico" name="GuardarCatedratico" value="Guardar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="nuevaAsignacion">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Nueva Asignacion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Carrera: </label>                            
+                            <select id="Carrera" name="Carrera" class="form-control" required="required">
 
+                            </select>                            
+                        </div>
+                        <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-danger" />
+                        <div class="form-group">
+                            <label>Curso: </label>
+                            <select id="Curso" name="Curso" class="form-control" required="required">
+
+                            </select>                            
+                        </div>                                                    
+                        <div class="form-group">
+                            <label>Seccion: </label>
+                            <input type="text" id="Seccion" name="Seccion" class="form-control" required="required" placeholder="Seccion" />
+                        </div>
+                        <div class="form-group text-center">                            
+                            <input type="submit" name="GuardarAsignacion" id="GuardarAsignacion" class="btn btn primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 

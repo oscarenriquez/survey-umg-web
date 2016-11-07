@@ -5,19 +5,22 @@ Partial Class Views_Administradores
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Not (Session("Activo") IsNot Nothing AndAlso Session("Activo")) Then
             Response.Redirect("/", True)
+        ElseIf Request("GuardarUsuario") IsNot Nothing Then
+            Dim Login As String = Request("Login")
+            Dim Password As String = Request("Password")
+            If Login IsNot Nothing AndAlso Password IsNot Nothing Then
+                GuardarUsuario(Login, Password)
+            End If
+
         End If
     End Sub
 
-    Protected Sub btnGuardarUsuario_Click(sender As Object, e As EventArgs) Handles btnGuardarUsuario.Click
-        UsuariosSDS.InsertParameters("LOGIN").DefaultValue = Login.Text
-        UsuariosSDS.InsertParameters("PASSWORD").DefaultValue = Password.Text
-        UsuariosSDS.InsertParameters("FECHA").DefaultValue = New DateTime
+    Private Sub GuardarUsuario(Login As String, Password As String)
+        UsuariosSDS.InsertParameters("LOGIN").DefaultValue = Login
+        UsuariosSDS.InsertParameters("PASSWORD").DefaultValue = Password
         UsuariosSDS.Insert()
-        Login.Text = String.Empty
-        Password.Text = String.Empty
         UsuariosSDS.InsertParameters("LOGIN").DefaultValue = String.Empty
         UsuariosSDS.InsertParameters("PASSWORD").DefaultValue = String.Empty
-        UsuariosSDS.InsertParameters("FECHA").DefaultValue = Nothing
     End Sub
 
 End Class

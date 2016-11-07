@@ -22,14 +22,14 @@
                                 <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                                 <asp:BoundField DataField="LOGIN" HeaderText="LOGIN" SortExpression="LOGIN" />
-                                <asp:BoundField DataField="PASSWORD" HeaderText="PASSWORD" SortExpression="PASSWORD" />
+                                <asp:BoundField DataField="PASSWORD" HeaderText="PASSWORD" ReadOnly="True" Visible="false" SortExpression="PASSWORD" />
                                 <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
                             </Columns>
                         </asp:GridView>
                         <asp:SqlDataSource ID="UsuariosSDS" runat="server" 
                             ConnectionString="<%$ ConnectionStrings:connStr %>" 
                             DeleteCommand="DELETE FROM [USUARIOS] WHERE [ID] = @ID" 
-                            InsertCommand="INSERT INTO [USUARIOS] ([LOGIN], [PASSWORD], [FECHA], [TIPO_USUARIO]) VALUES (@LOGIN, @PASSWORD, @FECHA, @TIPO_USUARIO)" 
+                            InsertCommand="INSERT INTO [USUARIOS] ([LOGIN], [PASSWORD], [FECHA], [TIPO_USUARIO]) VALUES (@LOGIN, @PASSWORD, GETDATE(), @TIPO_USUARIO)" 
                             SelectCommand="SELECT [ID], [LOGIN], [PASSWORD], [FECHA] FROM [USUARIOS] WHERE ([TIPO_USUARIO] = @TIPO_USUARIO)" 
                             UpdateCommand="UPDATE [USUARIOS] SET [LOGIN] = @LOGIN, [PASSWORD] = @PASSWORD, [FECHA] = @FECHA WHERE [ID] = @ID">
                             <DeleteParameters>
@@ -37,8 +37,7 @@
                             </DeleteParameters>
                             <InsertParameters>
                                 <asp:Parameter Name="LOGIN" Type="String" />
-                                <asp:Parameter Name="PASSWORD" Type="String" />
-                                <asp:Parameter Name="FECHA" Type="DateTime" />
+                                <asp:Parameter Name="PASSWORD" Type="String" />                                
                                 <asp:Parameter DefaultValue="1" Name="TIPO_USUARIO" Type="Int32" />
                             </InsertParameters>
                             <SelectParameters>
@@ -54,8 +53,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" role="dialog" id="nuevoUsuario">
+        </div>        
+    </form>
+    <div class="modal fade" role="dialog" id="nuevoUsuario">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -63,23 +63,22 @@
                         <h4 class="modal-title">Agregar Usuario</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
+                        <form method="post" id="form2" class="form" action="Administradores.aspx">
                             <div class="form-group">
                                 <label>Login: </label>
-                                <asp:TextBox ID="Login" runat="server" CssClass="form-control"></asp:TextBox>                                
+                                <input type="text" class="form-control" name="Login" id="Login" required="required" />
                             </div>
                             <div class="form-group">
                                 <label>Password: </label>
-                                <asp:TextBox ID="Password" runat="server" CssClass="form-control"></asp:TextBox>                                
+                                <input type="text" class="form-control" name="Password" id="Password" required="required" />
                             </div>
-                            <div class="form-group text-center">
-                                <asp:Button ID="btnGuardarUsuario" runat="server" Text="Guardar" CssClass="btn btn-primary" />
+                            <div class="form-group text-center">                                
+                                <input type="submit" class="btn btn-primary" name="GuardarUsuario" value="Guardar" />
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
 </asp:Content>
 

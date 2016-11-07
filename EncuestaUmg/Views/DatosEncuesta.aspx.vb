@@ -8,7 +8,7 @@ Partial Class Views_DatosEncuesta
         Dim pregunta3 = Request("pregunta3")
         Dim pregunta4 = Request("pregunta4")
         Dim pregunta5 = Request("pregunta5")
-        Dim pregunta6 = Request("preguntat6")
+        Dim pregunta6 = Request("pregunta6")
         Dim observaciones = Request("observaciones")
 
         If (pregunta1 Is Nothing OrElse pregunta2 Is Nothing OrElse pregunta3 Is Nothing OrElse pregunta4 Is Nothing OrElse pregunta5 Is Nothing) Then

@@ -17,7 +17,9 @@ Partial Class Views_DatosEstudiante
         Session("ID_CARRERA") = ID_CARRERA
 
         auth.CrearEstudiante(Session("Carnet"), NOMBRE, CICLO, ID_CARRERA)
-        Session("ID_ESTUDIANTE") = auth.ConsultaEstudiante(Session("Carnet"))
+        Dim dict As Dictionary(Of String, Long) = auth.ConsultaEstudiante(Session("Carnet"))
+        Session("ID_ESTUDIANTE") = dict("ID")
+        Session("ID_CARRERA") = dict("ID_CARRERA")
 
         Response.Redirect("/Views/DatosCurso.aspx", True)
     End Sub
