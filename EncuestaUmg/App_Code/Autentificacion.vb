@@ -140,4 +140,55 @@ Public Class Autentificacion
             conn.Close()
         End Try
     End Sub
+
+    Public Function GetListaCarreras() As List(Of Dictionary(Of String, String))
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim listaCarreras As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+
+        Try
+            conn.Open()
+            Dim sql = " SELECT ID, NOMBRE FROM CARRERA ORDER BY ID "
+            Dim read As SqlDataReader = ConexionUtil.CreateCommandRead(sql, conn, parameters)
+            If read.HasRows Then
+                Do While read.Read
+                    Dim row As Dictionary(Of String, String) = New Dictionary(Of String, String)
+                    row.Add("ID", read.GetInt64(0).ToString)
+                    row.Add("DESC", read.GetString(1))
+                    listaCarreras.Add(row)
+                Loop
+            End If
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        Return listaCarreras
+    End Function
+
+    Public Function GetListaCursosByCarrera(ByVal CarreraId As Long) As List(Of Dictionary(Of String, String))
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim listaCarreras As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+        parameters.Add(New SqlParameter("ID_CARRERA", CarreraId))
+        Try
+            conn.Open()
+            Dim sql = " SELECT ID, NOMBRE FROM CURSO WHERE ID_CARRERA = @ID_CARRERA ORDER BY ID "
+            Dim read As SqlDataReader = ConexionUtil.CreateCommandRead(sql, conn, parameters)
+            If read.HasRows Then
+                Do While read.Read
+                    Dim row As Dictionary(Of String, String) = New Dictionary(Of String, String)
+                    row.Add("ID", read.GetInt64(0).ToString)
+                    row.Add("DESC", read.GetString(1))
+                    listaCarreras.Add(row)
+                Loop
+            End If
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        Return listaCarreras
+    End Function
+
 End Class

@@ -22,7 +22,7 @@
                                 <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                                 <asp:BoundField DataField="LOGIN" HeaderText="LOGIN" SortExpression="LOGIN" />
-                                <asp:BoundField DataField="PASSWORD" HeaderText="PASSWORD" ReadOnly="True" Visible="false" SortExpression="PASSWORD" />
+                                <asp:BoundField DataField="PASSWORD" Visible="false" ReadOnly="true"  HeaderText="PASSWORD" SortExpression="PASSWORD" />
                                 <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
                             </Columns>
                         </asp:GridView>
@@ -31,7 +31,7 @@
                             DeleteCommand="DELETE FROM [USUARIOS] WHERE [ID] = @ID" 
                             InsertCommand="INSERT INTO [USUARIOS] ([LOGIN], [PASSWORD], [FECHA], [TIPO_USUARIO]) VALUES (@LOGIN, @PASSWORD, GETDATE(), @TIPO_USUARIO)" 
                             SelectCommand="SELECT [ID], [LOGIN], [PASSWORD], [FECHA] FROM [USUARIOS] WHERE ([TIPO_USUARIO] = @TIPO_USUARIO)" 
-                            UpdateCommand="UPDATE [USUARIOS] SET [LOGIN] = @LOGIN, [PASSWORD] = @PASSWORD, [FECHA] = @FECHA WHERE [ID] = @ID">
+                            UpdateCommand="UPDATE [USUARIOS] SET [LOGIN] = @LOGIN, [FECHA] = @FECHA WHERE [ID] = @ID">
                             <DeleteParameters>
                                 <asp:Parameter Name="ID" Type="Int64" />
                             </DeleteParameters>
@@ -45,7 +45,6 @@
                             </SelectParameters>
                             <UpdateParameters>
                                 <asp:Parameter Name="LOGIN" Type="String" />
-                                <asp:Parameter Name="PASSWORD" Type="String" />
                                 <asp:Parameter Name="FECHA" Type="DateTime" />
                                 <asp:Parameter Name="ID" Type="Int64" />
                             </UpdateParameters>

@@ -17,6 +17,7 @@ Partial Class Views_Carreras
             CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = NombreCarrera
             CarrerasSDS.Insert()
             CarrerasSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
+            gvCarreras.DataBind()
         End If
 
         If Request("GuardarCurso") IsNot Nothing AndAlso Request("NombreCurso") IsNot Nothing Then
@@ -25,6 +26,7 @@ Partial Class Views_Carreras
             CursosSDS.InsertParameters("ID_CARRERA").DefaultValue = gvCarreras.SelectedValue
             CursosSDS.Insert()
             CursosSDS.InsertParameters("NOMBRE").DefaultValue = String.Empty
+            gvCursos.DataBind()
         End If
     End Sub
 

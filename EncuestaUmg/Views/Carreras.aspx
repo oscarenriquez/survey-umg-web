@@ -65,6 +65,7 @@
             </div>
             <div class="panel-body">
                 <div class="form">
+                    
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
                             <div class="well well-sm text-right">
@@ -76,28 +77,26 @@
                                     <Columns>
                                         <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                                         <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                                        <asp:BoundField DataField="ID_CARRERA" HeaderText="ID_CARRERA" SortExpression="ID_CARRERA" />
                                         <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" SortExpression="NOMBRE" />
                                     </Columns>
                                 </asp:GridView>
                                 <asp:SqlDataSource ID="CursosSDS" runat="server"
                                     ConnectionString="<%$ ConnectionStrings:connStr %>"
                                     DeleteCommand="DELETE FROM [CURSO] WHERE [ID] = @ID"
-                                    InsertCommand="INSERT INTO [CURSO] ([ID_CARRERA], [NOMBRE]) VALUES (@ID_CARRERA, @NOMBRE)"
-                                    SelectCommand="SELECT * FROM [CURSO] WHERE ([ID_CARRERA] = @ID_CARRERA)"
-                                    UpdateCommand="UPDATE [CURSO] SET [ID_CARRERA] = @ID_CARRERA, [NOMBRE] = @NOMBRE WHERE [ID] = @ID">
+                                    InsertCommand="INSERT INTO [CURSO] ([NOMBRE],[ID_CARRERA]) VALUES (@NOMBRE, @ID_CARRERA)"
+                                    SelectCommand="SELECT [ID], [NOMBRE] FROM [CURSO] WHERE ([ID_CARRERA] = @ID_CARRERA)"
+                                    UpdateCommand="UPDATE [CURSO] SET [NOMBRE] = @NOMBRE WHERE [ID] = @ID">
                                     <DeleteParameters>
                                         <asp:Parameter Name="ID" Type="Int64" />
                                     </DeleteParameters>
                                     <InsertParameters>
-                                        <asp:Parameter Name="ID_CARRERA" Type="Int64" />
                                         <asp:Parameter Name="NOMBRE" Type="String" />
+                                        <asp:Parameter Name="ID_CARRERA" />
                                     </InsertParameters>
                                     <SelectParameters>
                                         <asp:ControlParameter ControlID="gvCarreras" DefaultValue="0" Name="ID_CARRERA" PropertyName="SelectedValue" Type="Int64" />
                                     </SelectParameters>
                                     <UpdateParameters>
-                                        <asp:Parameter Name="ID_CARRERA" Type="Int64" />
                                         <asp:Parameter Name="NOMBRE" Type="String" />
                                         <asp:Parameter Name="ID" Type="Int64" />
                                     </UpdateParameters>
@@ -106,10 +105,31 @@
                         </ContentTemplate>
 
                         <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="gvCarreras" EventName="SelectedIndexChanged" />
+                            <asp:AsyncPostBackTrigger ControlID="gvCarreras" EventName="SelectedIndexChanged" />                            
                         </Triggers>
 
                     </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="nuevoCurso">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Agregar Curso</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form">
+                            <div class="form-group">
+                                <label>Nombre Curso: </label>                            
+                                <input type="text" id="NombreCurso" name="NombreCurso" class="form-control" required="required" placeholder="Nombre Curso" />                                
+                            </div>
+                            <div class="form-group text-center">                            
+                                <input type="submit" id="GuardarCurso" name="GuardarCurso" value="Guardar" class="btn btn-primary" />                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,28 +154,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" role="dialog" id="nuevoCurso">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Agregar Curso</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="Carreras.aspx" method="post" class="form">
-                        <div class="form-group">
-                            <label>Nombre Curso: </label>                            
-                            <input type="text" id="NombreCurso" name="NombreCurso" class="form-control" required="required" placeholder="Nombre Curso" />
-                        </div>
-                        <div class="form-group text-center">
-                            <asp:Button ID="btnGuardarCurso" runat="server" Text="Guardar" CssClass="btn btn-primary" />
-                            <input type="submit" id="GuardarCurso" name="GuardarCurso" value="Guardar" class="btn btn-primary" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>    
 </asp:Content>
 
