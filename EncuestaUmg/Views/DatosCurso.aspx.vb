@@ -9,7 +9,12 @@ Partial Class Views_DatosCurso
         End If
     End Sub
     Protected Sub btnContinuar2_Click(sender As Object, e As EventArgs) Handles btnContinuar2.Click
-        Session("ID_CATED_CURSO") = Int64.Parse(ListaCatedraticos.SelectedValue)
-        Response.Redirect("/Views/DatosEncuesta.aspx", True)
+        Dim ID_CAT_CURSO = Int64.Parse(ListaCatedraticos.SelectedValue)
+        Session("ID_CATED_CURSO") = ID_CAT_CURSO
+        Dim auth As Autentificacion = New Autentificacion
+        Dim dict As Dictionary(Of String, Object) = auth.GetCatedraticoCurso(ID_CAT_CURSO)
+        Session("CATEDRATICO") = dict("CATEDRATICO")
+        Session("CURSO") = dict("CURSO")
+        Response.Redirect("/Views/DatosEncuesta2.aspx", True)
     End Sub
 End Class

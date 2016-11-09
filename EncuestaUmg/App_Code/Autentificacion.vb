@@ -48,21 +48,23 @@ Public Class Autentificacion
         Return result > 0
     End Function
 
-    Public Function ConsultaEstudiante(carnet As String) As Dictionary(Of String, Long)
+    Public Function ConsultaEstudiante(carnet As String) As Dictionary(Of String, Object)
         Dim conn As SqlConnection = ConexionUtil.GetConnection
         Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
 
         Dim param1 = New SqlParameter("@carnet", carnet)
 
         parameters.Add(param1)
-        Dim result As Dictionary(Of String, Long) = New Dictionary(Of String, Long)
+        Dim result As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
         Try
             conn.Open()
 
-            Dim reader As SqlDataReader = ConexionUtil.CreateCommandRead("SELECT ID, ID_CARRERA FROM [ESTUDIANTE] WHERE LOWER(CARNET) = @carnet ", conn, parameters)
+            Dim reader As SqlDataReader = ConexionUtil.CreateCommandRead("SELECT A.ID, A.ID_CARRERA, A.NOMBRE, B.NOMBRE FROM [ESTUDIANTE] AS A INNER JOIN [CARRERA] AS B ON (A.ID_CARRERA = B.ID) WHERE LOWER(A.CARNET) = @carnet ", conn, parameters)
             Do While reader.Read()
                 result.Add("ID", reader.GetInt64(0))
                 result.Add("ID_CARRERA", reader.GetInt64(1))
+                result.Add("NOMBRE", reader.GetString(2))
+                result.Add("CARRERA", reader.GetString(3))
             Loop
         Catch ex As Exception
             Console.WriteLine(ex.Message)
@@ -73,46 +75,51 @@ Public Class Autentificacion
         Return result
     End Function
 
-    Public Sub CrearEncuesta(encuesta As Encuesta)
+    Public Function CrearEncuesta(encuesta As Encuesta) As Long
         Dim conn As SqlConnection = ConexionUtil.GetConnection
         Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
 
         Dim param1 As SqlParameter = New SqlParameter("@ID_ESTUDIANTE", encuesta.ID_ESTUDIANTE)
         Dim param2 As SqlParameter = New SqlParameter("@ID_CATED_CURSO", encuesta.ID_CATED_CURSO)
-        Dim param3 As SqlParameter = New SqlParameter("@PREGUNTA1", encuesta.PREGUNTA1)
-        Dim param4 As SqlParameter = New SqlParameter("@PREGUNTA2", encuesta.PREGUNTA2)
-        Dim param5 As SqlParameter = New SqlParameter("@PREGUNTA3", encuesta.PREGUNTA3)
-        Dim param6 As SqlParameter = New SqlParameter("@PREGUNTA4", encuesta.PREGUNTA4)
-        Dim param7 As SqlParameter = New SqlParameter("@PREGUNTA5", encuesta.PREGUNTA5)
-        Dim param8 As SqlParameter = New SqlParameter("@PREGUNTA6", encuesta.PREGUNTA6)
+        'Dim param3 As SqlParameter = New SqlParameter("@PREGUNTA1", encuesta.PREGUNTA1)
+        'Dim param4 As SqlParameter = New SqlParameter("@PREGUNTA2", encuesta.PREGUNTA2)
+        'Dim param5 As SqlParameter = New SqlParameter("@PREGUNTA3", encuesta.PREGUNTA3)
+        'Dim param6 As SqlParameter = New SqlParameter("@PREGUNTA4", encuesta.PREGUNTA4)
+        'Dim param7 As SqlParameter = New SqlParameter("@PREGUNTA5", encuesta.PREGUNTA5)
+        'Dim param8 As SqlParameter = New SqlParameter("@PREGUNTA6", encuesta.PREGUNTA6)
         Dim param9 As SqlParameter = New SqlParameter("@TOTAL", encuesta.TOTAL)
         Dim param10 As SqlParameter = New SqlParameter("@OBSERVACIONES", encuesta.OBSERVACIONES)
         'Dim param11 As SqlParameter = New SqlParameter("@FECHA", encuesta.FECHA)
 
         parameters.Add(param1)
         parameters.Add(param2)
-        parameters.Add(param3)
-        parameters.Add(param4)
-        parameters.Add(param5)
-        parameters.Add(param6)
-        parameters.Add(param7)
-        parameters.Add(param8)
+        'parameters.Add(param3)
+        'parameters.Add(param4)
+        'parameters.Add(param5)
+        'parameters.Add(param6)
+        'parameters.Add(param7)
+        'parameters.Add(param8)
         parameters.Add(param9)
         parameters.Add(param10)
         'parameters.Add(param11)
 
         Dim result As Integer = 0
+        Dim encuestaId As Long
         Try
             conn.Open()
-            Dim sql = "   INSERT INTO [ENCUESTA] (ID_ESTUDIANTE,ID_CATED_CURSO,PREGUNTA1,PREGUNTA2,PREGUNTA3,PREGUNTA4,PREGUNTA5,PREGUNTA6,TOTAL,OBSERVACIONES,FECHA) "
-            sql = sql & " VALUES(@ID_ESTUDIANTE,@ID_CATED_CURSO,@PREGUNTA1,@PREGUNTA2,@PREGUNTA3,@PREGUNTA4,@PREGUNTA5,@PREGUNTA6,@TOTAL,@OBSERVACIONES,GETDATE())"
+            Dim sql = "   INSERT INTO [ENCUESTA] (ID_ESTUDIANTE,ID_CATED_CURSO,TOTAL,OBSERVACIONES,FECHA) "
+            sql = sql & " VALUES(@ID_ESTUDIANTE,@ID_CATED_CURSO,@TOTAL,@OBSERVACIONES,GETDATE())"
             result = ConexionUtil.CreateCommand(sql, conn, parameters)
+
+            sql = " SELECT ID FROM ENCUESTA WHERE ID = (SELECT MAX(ID) FROM ENCUESTA) "
+            encuestaId = ConexionUtil.CreateCommandCount(sql, conn, New List(Of SqlParameter))
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         Finally
             conn.Close()
         End Try
-    End Sub
+        Return encuestaId
+    End Function
 
     Public Sub CrearEstudiante(carnet As String, nombre As String, ciclo As Int32, carrera As Long)
         Dim conn As SqlConnection = ConexionUtil.GetConnection
@@ -191,4 +198,58 @@ Public Class Autentificacion
         Return listaCarreras
     End Function
 
+    Public Function GetCatedraticoCurso(ID_CAT_CURSO As Long) As Dictionary(Of String, Object)
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+
+        Dim param1 = New SqlParameter("@ID_CAT_CURSO", ID_CAT_CURSO)
+
+        parameters.Add(param1)
+        Dim result As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
+        Try
+            conn.Open()
+            Dim sSql As String = " select b.nombre as catedratico, c.nombre as curso from catedratico_curso as a "
+            sSql &= " inner join catedratico as b on (a.id_catedratico = b.id) "
+            sSql &= " inner join curso as c on (a.id_curso = c.id) where a.id = @ID_CAT_CURSO"
+
+            Dim reader As SqlDataReader = ConexionUtil.CreateCommandRead(sSql, conn, parameters)
+            Do While reader.Read()
+                result.Add("CATEDRATICO", reader.GetString(0))
+                result.Add("CURSO", reader.GetString(1))
+            Loop
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+
+        Return result
+    End Function
+
+    Public Sub CrearEncuestaDetalle(ID_ENCUESTA As Long, ID_PREGUNTA As Long, VALOR As Integer)
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+
+        Dim param1 As SqlParameter = New SqlParameter("@ID_ENCUESTA", ID_ENCUESTA)
+        Dim param2 As SqlParameter = New SqlParameter("@ID_PREGUNTA", ID_PREGUNTA)
+        Dim param3 As SqlParameter = New SqlParameter("@VALOR", VALOR)
+
+        parameters.Add(param1)
+        parameters.Add(param2)
+        parameters.Add(param3)
+
+        Dim result As Integer = 0
+        Try
+            conn.Open()
+            Dim sql = "   INSERT INTO [ENCUESTA_DETALLE] (ID_ENCUESTA,ID_PREGUNTA,VALOR) "
+            sql = sql & " VALUES(@ID_ENCUESTA,@ID_PREGUNTA,@VALOR)"
+            result = ConexionUtil.CreateCommand(sql, conn, parameters)
+
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+
+    End Sub
 End Class

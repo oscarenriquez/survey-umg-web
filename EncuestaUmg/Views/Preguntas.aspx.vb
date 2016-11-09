@@ -2,10 +2,10 @@
 Partial Class Views_Preguntas
     Inherits System.Web.UI.Page
 
-    Protected Sub gvPreguntas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvPreguntas.SelectedIndexChanged
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
     End Sub
-    Protected Sub ListaCarreras_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListaCarreras.SelectedIndexChanged
+    Protected Sub dtPregunta_ItemInserted(sender As Object, e As DetailsViewInsertedEventArgs) Handles dtPregunta.ItemInserted
         gvPreguntas.DataBind()
     End Sub
 End Class

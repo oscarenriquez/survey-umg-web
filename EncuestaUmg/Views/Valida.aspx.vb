@@ -17,9 +17,11 @@ Partial Class Views_Valida
             Session("ExisteEstudiante") = auth.ExisteEstudiante(carnet)
             Session("Carnet") = carnet
             If (Session("ExisteEstudiante")) Then
-                Dim dict As Dictionary(Of String, Long) = auth.ConsultaEstudiante(carnet)
+                Dim dict As Dictionary(Of String, Object) = auth.ConsultaEstudiante(carnet)
                 Session("ID_ESTUDIANTE") = dict("ID")
                 Session("ID_CARRERA") = dict("ID_CARRERA")
+                Session("NOMBRE") = dict("NOMBRE")
+                Session("CARRERA") = dict("CARRERA")
                 Response.Redirect("/Views/DatosCurso.aspx", True)
             Else
                 Response.Redirect("/Views/DatosEstudiante.aspx", True)
@@ -27,6 +29,8 @@ Partial Class Views_Valida
         Else
             Session("ID_ESTUDIANTE") = Nothing
             Session("ID_CARRERA") = Nothing
+            Session("NOMBRE") = Nothing
+            Session("CARRERA") = Nothing
             Session("Activo") = False
             Response.Redirect("/", True)
         End If
