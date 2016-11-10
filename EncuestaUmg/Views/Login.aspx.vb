@@ -6,6 +6,7 @@ Partial Class view_Login
         Dim auth As Autentificacion = New Autentificacion
         If auth.Autenticar(Login1.UserName, Login1.Password) Then
             Session("Activo") = True
+            Session("Admin") = True
             Response.Redirect("/Views/Home.aspx", True)
         End If
     End Sub

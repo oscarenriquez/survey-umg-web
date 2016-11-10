@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     <div class="well well-sm">
                         <div class="row">
                             <asp:Label ID="lbCarrera" CssClass="control-label col-sm-4 text-right" runat="server" Text="Carrera:"></asp:Label>

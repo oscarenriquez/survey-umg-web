@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
                             <div class="well well-sm text-right">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                         <ContentTemplate>
                             <div class="well well-sm text-right">
@@ -116,7 +116,7 @@ WHERE A.ID_CATEDRATICO = @ID_CATEDRATICO;" UpdateCommand="UPDATE [CATEDRATICO_CU
                         <h4 class="modal-title">Nueva Asignacion</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
+                        <div class="form-horizontal">
                             <div class="form-group">
                                 <label>Carrera: </label>
                                 <select id="Carrera" name="Carrera" class="form-control" required="required">
@@ -148,7 +148,7 @@ WHERE A.ID_CATEDRATICO = @ID_CATEDRATICO;" UpdateCommand="UPDATE [CATEDRATICO_CU
                     <h4 class="modal-title">Agregar Catedraticos</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="Catedraticos.aspx" class="form">
+                    <form method="post" action="Catedraticos.aspx" class="form-horizontal">
                         <div class="form-group">
                             <label>Nombre: </label>
                             <input type="text" id="Nombre" name="Nombre" class="form-control" required="required" placeholder="Nombre" />

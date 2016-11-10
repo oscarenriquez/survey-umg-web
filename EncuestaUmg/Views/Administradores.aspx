@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
 
                     <div class="well well-sm text-right">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoUsuario"><i class="icon-plus-sign"></i>Nuevo</button>
@@ -62,7 +62,7 @@
                         <h4 class="modal-title">Agregar Usuario</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" id="form2" class="form" action="Administradores.aspx">
+                        <form method="post" id="form2" class="form-horizontal" action="Administradores.aspx">
                             <div class="form-group">
                                 <label>Login: </label>
                                 <input type="text" class="form-control" name="Login" id="Login" required="required" />

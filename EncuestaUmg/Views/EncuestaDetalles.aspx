@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     <div class="well well-sm">
                         <div class="row">
                             <asp:Label ID="lbCarrera" CssClass="control-label col-sm-4 text-right" runat="server" Text="Carrera:"></asp:Label>
@@ -35,7 +35,7 @@
                                 <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
                             </Columns>
                         </asp:GridView>
-                        <asp:SqlDataSource ID="EncuestaSDS" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT C.NOMBRE, C.CARNET, E.NOMBRE AS CATEDRATICO, F.NOMBRE AS CURSO, A.TOTAL,  A.OBSERVACIONES, A.FECHA FROM ENCUESTA A 
+                        <asp:SqlDataSource ID="EncuestaSDS" runat="server" ConnectionString="<%$ ConnectionStrings:connStr %>" SelectCommand="SELECT DISTINCT C.NOMBRE, C.CARNET, E.NOMBRE AS CATEDRATICO, F.NOMBRE AS CURSO, A.TOTAL,  A.OBSERVACIONES, A.FECHA FROM ENCUESTA A 
 INNER JOIN ENCUESTA_DETALLE B ON (B.ID_ENCUESTA = A.ID)
 INNER JOIN ESTUDIANTE C ON (A.ID_ESTUDIANTE = C.ID)
 INNER JOIN CATEDRATICO_CURSO D ON (A.ID_CATED_CURSO = D.ID)

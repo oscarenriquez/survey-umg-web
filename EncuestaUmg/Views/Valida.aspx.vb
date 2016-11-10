@@ -12,7 +12,7 @@ Partial Class Views_Valida
         If encuesta IsNot Nothing AndAlso encuesta.Equals("Encuesta") Then
             Dim carnet = carnet1 & "-" & carnet2 & "-" & carnet3
             Dim auth As Autentificacion = New Autentificacion
-
+            Session("Admin") = False
             Session("Activo") = True
             Session("ExisteEstudiante") = auth.ExisteEstudiante(carnet)
             Session("Carnet") = carnet

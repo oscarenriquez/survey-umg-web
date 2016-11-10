@@ -177,7 +177,7 @@ Public Class Autentificacion
         Dim conn As SqlConnection = ConexionUtil.GetConnection
         Dim listaCarreras As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
         Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
-        parameters.Add(New SqlParameter("ID_CARRERA", CarreraId))
+        parameters.Add(New SqlParameter("@ID_CARRERA", CarreraId))
         Try
             conn.Open()
             Dim sql = " SELECT ID, NOMBRE FROM CURSO WHERE ID_CARRERA = @ID_CARRERA ORDER BY ID "
@@ -196,6 +196,76 @@ Public Class Autentificacion
             conn.Close()
         End Try
         Return listaCarreras
+    End Function
+
+    Public Function GetListaCatedraticosByCurso(ByVal CursoId As Long) As List(Of Dictionary(Of String, String))
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim lista As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+        parameters.Add(New SqlParameter("@ID_CURSO", CursoId))
+        Try
+            conn.Open()
+            Dim sql As String = " select b.id, b.nombre, a.seccion from catedratico_curso as a " &
+                                " inner join catedratico as b on (a.id_catedratico = b.id) " &
+                                " where a.id_curso = @ID_CURSO "
+            Dim read As SqlDataReader = ConexionUtil.CreateCommandRead(sql, conn, parameters)
+            If read.HasRows Then
+                Do While read.Read
+                    Dim row As Dictionary(Of String, String) = New Dictionary(Of String, String)
+                    row.Add("ID", read.GetInt64(0).ToString)
+                    row.Add("DESC", read.GetString(1))
+                    row.Add("SECCION", read.GetString(2))
+                    lista.Add(row)
+                Loop
+            End If
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        Return lista
+    End Function
+
+    Public Function GetDataEncuestaByCurso(ByVal CursoId As Long, ByRef CatedraticoId As Long, ByVal IgnoreDate As Boolean, ByVal Fecha As String) As List(Of Dictionary(Of String, String))
+        Dim conn As SqlConnection = ConexionUtil.GetConnection
+        Dim lista As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
+        Dim parameters As List(Of SqlParameter) = New List(Of SqlParameter)
+        parameters.Add(New SqlParameter("@ID_CURSO", CursoId))
+        parameters.Add(New SqlParameter("@ID_CATEDRATICO", CatedraticoId))
+        If Not IgnoreDate Then
+            parameters.Add(New SqlParameter("@FECHA", Fecha))
+        End If
+        Try
+            conn.Open()
+            Dim sql As String = " select x.seccion, avg((total*100) /(cant*4)), count(*) as cant from " &
+                        " (select b.seccion, a.total, (select count(*) from encuesta_detalle where id_encuesta = a.id) cant " &
+                        " from encuesta as a  " &
+                        " inner join catedratico_curso as b on (a.id_cated_curso = b.id) " &
+                        " where b.id_catedratico = @ID_CATEDRATICO " &
+                        " and b.id_curso = @ID_CURSO "
+            If Not IgnoreDate Then
+                sql = sql & " CONVERT(varchar(10), a.[fecha], 103) = @FECHA "
+            End If
+            sql = sql & " ) as x " &
+                        " where x.cant > 0 " &
+                        " group by x.seccion, x.cant " &
+                        " order by avg((total*100) /(cant*4)) desc "
+            Dim read As SqlDataReader = ConexionUtil.CreateCommandRead(sql, conn, parameters)
+            If read.HasRows Then
+                Do While read.Read
+                    Dim row As Dictionary(Of String, String) = New Dictionary(Of String, String)
+                    row.Add("SECCION", read.GetString(0))
+                    row.Add("PROMEDIO", read.GetInt32(1).ToString)
+                    row.Add("CANTIDAD", read.GetInt32(2).ToString)
+                    lista.Add(row)
+                Loop
+            End If
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        Return lista
     End Function
 
     Public Function GetCatedraticoCurso(ID_CAT_CURSO As Long) As Dictionary(Of String, Object)

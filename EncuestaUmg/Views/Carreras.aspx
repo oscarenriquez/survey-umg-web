@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                         <ContentTemplate>
                             <div class="well well-sm text-right">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="form">
+                <div class="form-horizontal">
                     
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
@@ -120,7 +120,7 @@
                         <h4 class="modal-title">Agregar Curso</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form">
+                        <div class="form-horizontal">
                             <div class="form-group">
                                 <label>Nombre Curso: </label>                            
                                 <input type="text" id="NombreCurso" name="NombreCurso" class="form-control" required="required" placeholder="Nombre Curso" />                                
@@ -142,7 +142,7 @@
                     <h4 class="modal-title">Agregar Carrera</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="Carreras.aspx" class="form">
+                    <form method="post" action="Carreras.aspx" class="form-horizontal">
                         <div class="form-group">
                             <label>Nombre Carrera: </label>
                             <input type="text" id="NombreCarrera" name="NombreCarrera" class="form-control" placeholder="Nombre Carrera" required="required" />

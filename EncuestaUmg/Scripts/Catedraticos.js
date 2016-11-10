@@ -2,7 +2,7 @@
     function cambiaCarrera(e) {
         e.stopPropagation();
         e.preventDefault();
-        Curso
+        
         $.getJSON("Catedraticos.aspx?GetCursos=true&ID_CARRERA=" + e.target.value, function (data) {
             $("#Curso").html("");
             $("#Curso").append("<option value=''> Seleccione una opcion </option>");
